@@ -5,8 +5,10 @@
         "**/.svn": true,
         "**/.hg": true,
         "**/.DS_Store": true,
+        "**/.awcache": true,
         "**/bin": true,
         "**/obj": true,
         "**/project.lock.json": true
-    }
+    },
+    "typescript.tsdk": "node_modules/typescript/lib"
 }

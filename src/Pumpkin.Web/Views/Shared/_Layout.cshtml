@@ -2,11 +2,13 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Pumpkin.Web</title>
+    <link rel="stylesheet" href="~/client/styles.css" />
 </head>
 <body>
     @RenderBody()
+    <script src="~/client/app.bundle.js"></script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

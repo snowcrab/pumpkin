@@ -2,6 +2,7 @@
 
 const path = require('path');
 
+const webpack = require('webpack');
 const easyWebpack = require('@easy-webpack/core');
 const generateConfig = easyWebpack.default;
 
@@ -18,12 +19,17 @@ const wwwrootDir = path.resolve('wwwroot');
 const baseConfig = {
     entry: {
         app: [
-            './Client/Scripts'
+            './Client/Scripts/main'
         ]
     },
     output: {
         path: `${wwwrootDir}/client`
-    }
+    },
+    plugins: [
+        new webpack.ProvidePlugin({
+            "Tether": 'tether'
+        })
+    ]
 };
 
 switch (ENV) {
@@ -31,8 +37,24 @@ switch (ENV) {
         config = generateConfig(
             baseConfig,
             require('@easy-webpack/config-env-production')({ compress: true }),
+            require('@easy-webpack/config-typescript')({
+                options: {
+                    useCache: true,
+                    useBabel: true,
+                    babelOptions: {
+                        presets: [
+                            ['es2015', {
+                                modules: false
+                            }]
+                        ]
+                    }
+                }
+            }),
             require('@easy-webpack/config-html')(),
             require('@easy-webpack/config-css')({ filename: 'styles.css', allChunks: true, sourceMap: false }),
+            require('@easy-webpack/config-fonts-and-images')(),
+            require('@easy-webpack/config-global-bluebird')(),
+            require('@easy-webpack/config-global-jquery')(),
             require('@easy-webpack/config-uglify')({ debug: false })
         );
         break;
@@ -43,8 +65,24 @@ switch (ENV) {
         config = generateConfig(
             baseConfig,
             require('@easy-webpack/config-env-development')(),
+            require('@easy-webpack/config-typescript')({
+                options: {
+                    useCache: true,
+                    useBabel: true,
+                    babelOptions: {
+                        presets: [
+                            ['es2015', {
+                                modules: false
+                            }]
+                        ]
+                    }
+                }
+            }),
             require('@easy-webpack/config-html')(),
-            require('@easy-webpack/config-css')({ filename: 'styles.css', allChunks: true, sourceMap: false })
+            require('@easy-webpack/config-css')({ filename: 'styles.css', allChunks: true, sourceMap: false }),
+            require('@easy-webpack/config-fonts-and-images')(),
+            require('@easy-webpack/config-global-bluebird')(),
+            require('@easy-webpack/config-global-jquery')()
         );
         break;
 }
