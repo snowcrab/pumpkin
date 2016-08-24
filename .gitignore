@@ -247,5 +247,8 @@ ModelManifest.xml
 # Awsome Typescript Loader
 .awcache/
 
+# vscode
+.vscode/.BROWSE.VC.DB*
+
 # Project artifacts
 **/wwwroot/client/
